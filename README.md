@@ -32,7 +32,7 @@ manteniment si Meteocat canvia les rutes.
 
 1. A HACS, obre **Integracions**.
 2. Obre el menú de tres punts i selecciona **Repositoris personalitzats**.
-3. Afegeix `https://github.com/didac/meteocat-ha` com a tipus **Integració**.
+3. Afegeix `https://github.com/sabatesduran/meteocat-ha` com a tipus **Integració**.
 4. Instal·la **Meteocat Weather** i reinicia Home Assistant.
 5. Ves a **Configuració → Dispositius i serveis → Afegeix integració**.
 6. Cerca **Meteocat Weather** i introdueix la clau API.

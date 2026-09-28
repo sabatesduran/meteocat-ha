@@ -42,9 +42,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: MeteocatConfigEntry) -> 
     settings[CONF_ENTRY_ID] = entry.entry_id
     session = async_get_clientsession(hass)
     client = MeteocatApiClient(session, entry.data[CONF_API_KEY])
-    observations = MeteocatObservationCoordinator(hass, client, settings[CONF_STATION_ID], settings)
-    forecast = MeteocatForecastCoordinator(hass, client, settings[CONF_TOWN_ID], settings)
-    radar = MeteocatRadarCoordinator(hass, RadarProvider(session, settings), settings)
+    observations = MeteocatObservationCoordinator(
+        hass, entry, client, settings[CONF_STATION_ID], settings
+    )
+    forecast = MeteocatForecastCoordinator(hass, entry, client, settings[CONF_TOWN_ID], settings)
+    radar = MeteocatRadarCoordinator(hass, entry, RadarProvider(session, settings), settings)
 
     await asyncio.gather(
         observations.async_config_entry_first_refresh(),

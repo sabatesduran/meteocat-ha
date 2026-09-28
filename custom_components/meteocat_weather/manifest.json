@@ -1,13 +1,13 @@
 {
   "domain": "meteocat_weather",
   "name": "Meteocat Weather",
-  "codeowners": [],
+  "codeowners": ["@sabatesduran"],
   "config_flow": true,
   "dependencies": ["http"],
-  "documentation": "https://github.com/didac/meteocat-ha",
+  "documentation": "https://github.com/sabatesduran/meteocat-ha",
   "integration_type": "service",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/didac/meteocat-ha/issues",
+  "issue_tracker": "https://github.com/sabatesduran/meteocat-ha/issues",
   "requirements": [],
   "version": "0.1.0"
 }

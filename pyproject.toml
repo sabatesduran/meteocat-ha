@@ -9,6 +9,7 @@ dependencies = []
 
 [tool.pytest.ini_options]
 addopts = "-q"
+asyncio_mode = "auto"
 testpaths = ["tests"]
 pythonpath = ["."]
 

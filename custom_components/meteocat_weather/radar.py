@@ -10,6 +10,7 @@ from io import BytesIO
 from typing import Any
 
 from aiohttp import ClientError, ClientSession
+from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from PIL import Image, ImageDraw
@@ -228,13 +229,18 @@ class MeteocatRadarCoordinator(DataUpdateCoordinator[RadarResult]):
     """Coordinate public radar animation updates."""
 
     def __init__(
-        self, hass: HomeAssistant, provider: RadarProvider, settings: dict[str, Any]
+        self,
+        hass: HomeAssistant,
+        config_entry: ConfigEntry,
+        provider: RadarProvider,
+        settings: dict[str, Any],
     ) -> None:
         self.provider = provider
         self.using_cached_data = False
         super().__init__(
             hass,
             _LOGGER,
+            config_entry=config_entry,
             name=f"{DOMAIN}_radar",
             update_interval=RADAR_UPDATE_INTERVAL,
         )

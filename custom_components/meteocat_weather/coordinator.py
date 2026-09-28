@@ -7,7 +7,7 @@ import logging
 from datetime import timedelta
 from typing import Any
 
-from homeassistant.config_entries import ConfigEntryAuthFailed
+from homeassistant.config_entries import ConfigEntry, ConfigEntryAuthFailed
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -35,6 +35,7 @@ class MeteocatObservationCoordinator(DataUpdateCoordinator[Observations]):
     def __init__(
         self,
         hass: HomeAssistant,
+        config_entry: ConfigEntry,
         client: MeteocatApiClient,
         station_id: str,
         settings: dict[str, Any],
@@ -46,6 +47,7 @@ class MeteocatObservationCoordinator(DataUpdateCoordinator[Observations]):
         super().__init__(
             hass,
             _LOGGER,
+            config_entry=config_entry,
             name=f"{DOMAIN}_{station_id}_observations",
             update_interval=timedelta(minutes=minutes),
         )
@@ -77,6 +79,7 @@ class MeteocatForecastCoordinator(DataUpdateCoordinator[dict[str, Any]]):
     def __init__(
         self,
         hass: HomeAssistant,
+        config_entry: ConfigEntry,
         client: MeteocatApiClient,
         town_id: str,
         settings: dict[str, Any],
@@ -88,6 +91,7 @@ class MeteocatForecastCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         super().__init__(
             hass,
             _LOGGER,
+            config_entry=config_entry,
             name=f"{DOMAIN}_{town_id}_forecast",
             update_interval=timedelta(hours=hours),
         )

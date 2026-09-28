@@ -12,6 +12,8 @@ def test_manifest_and_hacs_metadata() -> None:
     assert manifest["domain"] == "meteocat_weather"
     assert manifest["config_flow"] is True
     assert manifest["version"] == "0.1.0"
+    assert manifest["documentation"] == "https://github.com/sabatesduran/meteocat-ha"
+    assert manifest["issue_tracker"] == "https://github.com/sabatesduran/meteocat-ha/issues"
     assert hacs["homeassistant"] == "2025.12.0"
 
 
