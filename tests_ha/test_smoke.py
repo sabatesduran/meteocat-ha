@@ -2,19 +2,22 @@
 
 import logging
 from datetime import UTC, datetime, timedelta
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 import pytest
 from homeassistant.data_entry_flow import FlowResultType
 from pytest_homeassistant_custom_component.common import MockConfigEntry
 
 from custom_components.meteocat_weather.camera import MeteocatRadarCamera
+from custom_components.meteocat_weather.config_flow import MeteocatWeatherConfigFlow
 from custom_components.meteocat_weather.const import (
+    CONF_API_KEY,
     CONF_ENTRY_ID,
     CONF_LATITUDE,
     CONF_LONGITUDE,
     CONF_STATION_ID,
     CONF_STATION_NAME,
+    CONF_TOWN_ID,
     CONF_TOWN_NAME,
     DOMAIN,
 )
@@ -22,7 +25,7 @@ from custom_components.meteocat_weather.coordinator import (
     MeteocatForecastCoordinator,
     MeteocatObservationCoordinator,
 )
-from custom_components.meteocat_weather.models import Observations
+from custom_components.meteocat_weather.models import Municipality, Observations, Station
 from custom_components.meteocat_weather.radar import MeteocatRadarCoordinator, RadarResult
 from custom_components.meteocat_weather.sensor import SENSORS, MeteocatObservationSensor
 from custom_components.meteocat_weather.weather import MeteocatWeather
@@ -33,11 +36,32 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def test_config_flow_user_form(hass) -> None:
-    """The integration's config flow loads and presents its first form."""
+    """The config flow proceeds from credentials to town and station selection."""
     result = await hass.config_entries.flow.async_init(DOMAIN, context={"source": "user"})
 
     assert result["type"] is FlowResultType.FORM
     assert result["step_id"] == "user"
+
+    async def load_reference(flow: MeteocatWeatherConfigFlow) -> None:
+        flow._municipalities = [Municipality("08019", "Barcelona")]
+        flow._stations = [Station("X8", "Barcelona", 41.39, 2.17, "08019")]
+        flow._automatic_town_id = "08019"
+        flow._automatic_station_id = "X8"
+
+    with patch.object(MeteocatWeatherConfigFlow, "_async_load_reference", load_reference):
+        result = await hass.config_entries.flow.async_configure(
+            result["flow_id"],
+            {
+                CONF_API_KEY: "test-api-key",
+                CONF_LATITUDE: 41.39,
+                CONF_LONGITUDE: 2.17,
+            },
+        )
+
+    assert result["type"] is FlowResultType.FORM
+    assert result["step_id"] == "location"
+    fields = {marker.schema for marker in result["data_schema"].schema}
+    assert {CONF_TOWN_ID, CONF_STATION_ID} <= fields
 
 
 async def test_entities_construct_against_home_assistant(hass) -> None:

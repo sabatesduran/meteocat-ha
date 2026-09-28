@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- S'ha aclarit el flux de configuració en dos passos per indicar que el municipi i l'estació XEMA es poden seleccionar després de validar la clau API.
+
 ## 0.1.1
 
 - Nou identificador visual amb transparència i variants d'alta resolució per a Home Assistant.

@@ -4,13 +4,15 @@
     "step": {
       "user": {
         "title": "Connect to Meteocat",
-        "description": "Enter the API key from apidocs.meteocat.gencat.cat. The coordinates are used to suggest the closest station and center the radar.",
-        "data": {"api_key": "API key", "latitude": "Latitude", "longitude": "Longitude"}
+        "description": "Enter the API key from apidocs.meteocat.gencat.cat. Select Next to validate it; on the following screen you can choose the forecast municipality and XEMA station. The coordinates are used to suggest the closest options and center the radar.",
+        "data": {"api_key": "API key", "latitude": "Latitude", "longitude": "Longitude"},
+        "submit": "Next"
       },
       "location": {
         "title": "Confirm weather sources",
         "description": "The closest municipality and operational XEMA station are selected automatically. You can change either selection.",
-        "data": {"town_id": "Forecast municipality", "station_id": "Observation station"}
+        "data": {"town_id": "Forecast municipality", "station_id": "Observation station"},
+        "submit": "Finish"
       },
       "reauth_confirm": {
         "title": "Reconnect to Meteocat",

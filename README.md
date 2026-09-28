@@ -35,7 +35,8 @@ manteniment si Meteocat canvia les rutes.
 3. Afegeix `https://github.com/sabatesduran/meteocat-ha` com a tipus **Integració**.
 4. Instal·la **Meteocat Weather** i reinicia Home Assistant.
 5. Ves a **Configuració → Dispositius i serveis → Afegeix integració**.
-6. Cerca **Meteocat Weather** i introdueix la clau API.
+6. Cerca **Meteocat Weather**, introdueix la clau API i prem **Següent**.
+7. Tria el municipi de la predicció i l'estació XEMA d'observació.
 
 ### Instal·lació manual
 

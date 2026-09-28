@@ -4,13 +4,15 @@
     "step": {
       "user": {
         "title": "Connecta amb Meteocat",
-        "description": "Introdueix la clau API d'apidocs.meteocat.gencat.cat. Les coordenades serveixen per proposar l'estació més propera i centrar el radar.",
-        "data": {"api_key": "Clau API", "latitude": "Latitud", "longitude": "Longitud"}
+        "description": "Introdueix la clau API d'apidocs.meteocat.gencat.cat. Prem Següent per validar-la; a la pantalla següent podràs triar el municipi de la predicció i l'estació XEMA. Les coordenades serveixen per proposar les opcions més properes i centrar el radar.",
+        "data": {"api_key": "Clau API", "latitude": "Latitud", "longitude": "Longitud"},
+        "submit": "Següent"
       },
       "location": {
         "title": "Confirma les fonts meteorològiques",
         "description": "S'han seleccionat automàticament el municipi i l'estació XEMA operativa més propers. Pots canviar qualsevol selecció.",
-        "data": {"town_id": "Municipi de la predicció", "station_id": "Estació d'observació"}
+        "data": {"town_id": "Municipi de la predicció", "station_id": "Estació d'observació"},
+        "submit": "Finalitza"
       },
       "reauth_confirm": {
         "title": "Torna a connectar amb Meteocat",
