@@ -1,0 +1,62 @@
+{
+  "title": "Meteocat Weather",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Meteocat",
+        "description": "Enter the API key from apidocs.meteocat.gencat.cat. The coordinates are used to suggest the closest station and center the radar.",
+        "data": {"api_key": "API key", "latitude": "Latitude", "longitude": "Longitude"}
+      },
+      "location": {
+        "title": "Confirm weather sources",
+        "description": "The closest municipality and operational XEMA station are selected automatically. You can change either selection.",
+        "data": {"town_id": "Forecast municipality", "station_id": "Observation station"}
+      },
+      "reauth_confirm": {
+        "title": "Reconnect to Meteocat",
+        "description": "The API key is no longer accepted. Enter a new key.",
+        "data": {"api_key": "API key"}
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to Meteocat",
+      "invalid_auth_or_plan": "The API key is invalid or does not include both XEMA and Prediction plans",
+      "rate_limited": "The Meteocat API quota is exhausted. Try again after the quota resets",
+      "unknown": "Unexpected Meteocat response"
+    },
+    "abort": {
+      "already_configured": "This municipality and station are already configured",
+      "reauth_successful": "The API key was updated successfully"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Meteocat Weather options",
+        "description": "Change location, weather sources, quota-aware refresh intervals, or radar coverage.",
+        "data": {
+          "latitude": "Radar latitude", "longitude": "Radar longitude",
+          "town_id": "Forecast municipality", "station_id": "Observation station",
+          "observation_interval": "XEMA refresh interval", "forecast_interval": "Forecast refresh interval",
+          "radar_zoom": "Radar coverage", "radar_frames": "Radar animation duration"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to Meteocat",
+      "invalid_auth_or_plan": "The API key is invalid or a required plan is unavailable",
+      "rate_limited": "The Meteocat API quota is exhausted",
+      "unknown": "Unexpected Meteocat response"
+    }
+  },
+  "entity": {
+    "camera": {"radar": {"name": "Rain radar"}},
+    "sensor": {
+      "temperature": {"name": "Temperature"}, "humidity": {"name": "Humidity"},
+      "pressure": {"name": "Pressure"}, "precipitation": {"name": "Precipitation"},
+      "wind_speed": {"name": "Wind speed"}, "wind_bearing": {"name": "Wind direction"},
+      "wind_gust": {"name": "Wind gust"}, "observed_at": {"name": "Last observation"}
+    },
+    "weather": {"weather": {"name": "Weather"}}
+  }
+}

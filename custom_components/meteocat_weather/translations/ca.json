@@ -1,0 +1,62 @@
+{
+  "title": "Temps de Meteocat",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connecta amb Meteocat",
+        "description": "Introdueix la clau API d'apidocs.meteocat.gencat.cat. Les coordenades serveixen per proposar l'estació més propera i centrar el radar.",
+        "data": {"api_key": "Clau API", "latitude": "Latitud", "longitude": "Longitud"}
+      },
+      "location": {
+        "title": "Confirma les fonts meteorològiques",
+        "description": "S'han seleccionat automàticament el municipi i l'estació XEMA operativa més propers. Pots canviar qualsevol selecció.",
+        "data": {"town_id": "Municipi de la predicció", "station_id": "Estació d'observació"}
+      },
+      "reauth_confirm": {
+        "title": "Torna a connectar amb Meteocat",
+        "description": "La clau API ja no és acceptada. Introdueix-ne una de nova.",
+        "data": {"api_key": "Clau API"}
+      }
+    },
+    "error": {
+      "cannot_connect": "No s'ha pogut connectar amb Meteocat",
+      "invalid_auth_or_plan": "La clau API no és vàlida o no inclou els plans XEMA i Predicció",
+      "rate_limited": "S'ha exhaurit la quota de l'API de Meteocat. Torna-ho a provar quan es renovi",
+      "unknown": "Resposta inesperada de Meteocat"
+    },
+    "abort": {
+      "already_configured": "Aquest municipi i aquesta estació ja estan configurats",
+      "reauth_successful": "La clau API s'ha actualitzat correctament"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opcions de Temps de Meteocat",
+        "description": "Canvia la ubicació, les fonts, els intervals adaptats a la quota o la cobertura del radar.",
+        "data": {
+          "latitude": "Latitud del radar", "longitude": "Longitud del radar",
+          "town_id": "Municipi de la predicció", "station_id": "Estació d'observació",
+          "observation_interval": "Actualització XEMA", "forecast_interval": "Actualització de la predicció",
+          "radar_zoom": "Cobertura del radar", "radar_frames": "Durada de l'animació radar"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No s'ha pogut connectar amb Meteocat",
+      "invalid_auth_or_plan": "La clau API no és vàlida o falta un pla necessari",
+      "rate_limited": "S'ha exhaurit la quota de l'API de Meteocat",
+      "unknown": "Resposta inesperada de Meteocat"
+    }
+  },
+  "entity": {
+    "camera": {"radar": {"name": "Radar de pluja"}},
+    "sensor": {
+      "temperature": {"name": "Temperatura"}, "humidity": {"name": "Humitat"},
+      "pressure": {"name": "Pressió"}, "precipitation": {"name": "Precipitació"},
+      "wind_speed": {"name": "Velocitat del vent"}, "wind_bearing": {"name": "Direcció del vent"},
+      "wind_gust": {"name": "Ratxa de vent"}, "observed_at": {"name": "Última observació"}
+    },
+    "weather": {"weather": {"name": "Temps"}}
+  }
+}

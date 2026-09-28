@@ -1,0 +1,8 @@
+{
+  "name": "Meteocat Weather",
+  "country": "ES",
+  "homeassistant": "2025.12.0",
+  "render_readme": true,
+  "zip_release": true,
+  "filename": "meteocat_weather.zip"
+}

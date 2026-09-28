@@ -1,0 +1,62 @@
+{
+  "title": "Tiempo de Meteocat",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Conectar con Meteocat",
+        "description": "Introduce la clave API de apidocs.meteocat.gencat.cat. Las coordenadas se usan para sugerir la estación más cercana y centrar el radar.",
+        "data": {"api_key": "Clave API", "latitude": "Latitud", "longitude": "Longitud"}
+      },
+      "location": {
+        "title": "Confirmar fuentes meteorológicas",
+        "description": "Se han seleccionado automáticamente el municipio y la estación XEMA operativa más cercanos. Puedes cambiar ambas opciones.",
+        "data": {"town_id": "Municipio de la predicción", "station_id": "Estación de observación"}
+      },
+      "reauth_confirm": {
+        "title": "Volver a conectar con Meteocat",
+        "description": "La clave API ya no se acepta. Introduce una clave nueva.",
+        "data": {"api_key": "Clave API"}
+      }
+    },
+    "error": {
+      "cannot_connect": "No se ha podido conectar con Meteocat",
+      "invalid_auth_or_plan": "La clave API no es válida o no incluye los planes XEMA y Predicción",
+      "rate_limited": "Se ha agotado la cuota de la API de Meteocat. Inténtalo cuando se renueve",
+      "unknown": "Respuesta inesperada de Meteocat"
+    },
+    "abort": {
+      "already_configured": "Este municipio y esta estación ya están configurados",
+      "reauth_successful": "La clave API se ha actualizado correctamente"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opciones de Tiempo de Meteocat",
+        "description": "Cambia la ubicación, las fuentes, los intervalos adaptados a la cuota o la cobertura del radar.",
+        "data": {
+          "latitude": "Latitud del radar", "longitude": "Longitud del radar",
+          "town_id": "Municipio de la predicción", "station_id": "Estación de observación",
+          "observation_interval": "Actualización XEMA", "forecast_interval": "Actualización de la predicción",
+          "radar_zoom": "Cobertura del radar", "radar_frames": "Duración de la animación radar"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se ha podido conectar con Meteocat",
+      "invalid_auth_or_plan": "La clave API no es válida o falta un plan necesario",
+      "rate_limited": "Se ha agotado la cuota de la API de Meteocat",
+      "unknown": "Respuesta inesperada de Meteocat"
+    }
+  },
+  "entity": {
+    "camera": {"radar": {"name": "Radar de lluvia"}},
+    "sensor": {
+      "temperature": {"name": "Temperatura"}, "humidity": {"name": "Humedad"},
+      "pressure": {"name": "Presión"}, "precipitation": {"name": "Precipitación"},
+      "wind_speed": {"name": "Velocidad del viento"}, "wind_bearing": {"name": "Dirección del viento"},
+      "wind_gust": {"name": "Racha de viento"}, "observed_at": {"name": "Última observación"}
+    },
+    "weather": {"weather": {"name": "Tiempo"}}
+  }
+}
