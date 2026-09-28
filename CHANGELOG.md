@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Nou identificador visual amb transparència i variants d'alta resolució per a Home Assistant.
+
 ## 0.1.0
 
 - Primera versió de `meteocat_weather`.
