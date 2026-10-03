@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+
+- Corregida la configuració quan Meteocat encara no ha publicat les estacions operatives del dia actual: es consulta automàticament l'últim dia disponible.
+- Afegit suport per al codi numèric `2` que l'API retorna per identificar les estacions operatives.
+
 ## 0.1.3
 
 - Corregida la consulta d'estacions operatives XEMA per incloure la data que ara exigeix l'API de Meteocat.

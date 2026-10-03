@@ -46,7 +46,7 @@ class FakeSession:
 
 
 def test_station_filter_includes_required_date() -> None:
-    session = FakeSession([FakeResponse(200, payload=[])])
+    session = FakeSession([FakeResponse(200, payload=[{"codi": "X1"}])])
 
     asyncio.run(MeteocatApiClient(session, "secret").async_get_stations())
 
@@ -54,6 +54,20 @@ def test_station_filter_includes_required_date() -> None:
         r"/xema/v1/estacions/metadades\?estat=ope&data=\d{4}-\d{2}-\d{2}Z$",
         session.urls[-1],
     )
+
+
+def test_station_filter_retries_an_earlier_date_when_empty() -> None:
+    session = FakeSession(
+        [
+            FakeResponse(200, payload=[]),
+            FakeResponse(200, payload=[{"codi": "X1"}]),
+        ]
+    )
+
+    result = asyncio.run(MeteocatApiClient(session, "secret").async_get_stations())
+
+    assert result == [{"codi": "X1"}]
+    assert len(session.urls) == 2
 
 
 def test_observations_retry_last_available_date() -> None:

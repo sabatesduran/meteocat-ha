@@ -74,8 +74,19 @@ class MeteocatApiClient:
 
     async def async_get_stations(self) -> Any:
         """Return operational XEMA stations."""
-        today = datetime.now(ZoneInfo("Europe/Madrid")).strftime("%Y-%m-%dZ")
-        return await self._request(f"/xema/v1/estacions/metadades?estat=ope&data={today}")
+        now = datetime.now(ZoneInfo("Europe/Madrid"))
+        payload: Any = []
+        # Meteocat commonly returns an empty list for the current date. Start
+        # with yesterday and tolerate a few additional publication delays.
+        for days_ago in range(1, 8):
+            date = (now - timedelta(days=days_ago)).strftime("%Y-%m-%dZ")
+            payload = await self._request(f"/xema/v1/estacions/metadades?estat=ope&data={date}")
+            stations = payload
+            if isinstance(payload, dict):
+                stations = payload.get("estacions", payload.get("stations", payload.get("data")))
+            if isinstance(stations, list) and stations:
+                return payload
+        return payload
 
     async def async_get_station_metadata(self, station_id: str) -> Any:
         """Return metadata for one XEMA station."""

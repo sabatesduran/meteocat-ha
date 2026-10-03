@@ -25,7 +25,7 @@ def test_normalizes_reference_data_and_finds_nearest_station() -> None:
                 "nom": "Barcelona - Observatori Fabra",
                 "coordenades": {"latitud": 41.418, "longitud": 2.124},
                 "municipi": {"codi": "080193", "nom": "Barcelona"},
-                "estats": [{"codi": "ope"}],
+                "estats": [{"codi": 2}],
             },
             {
                 "codi": "X2",
@@ -37,6 +37,7 @@ def test_normalizes_reference_data_and_finds_nearest_station() -> None:
         ]
     )
     assert [town.name for town in towns] == ["Barcelona", "Girona"]
+    assert [station.code for station in stations] == ["X1", "X2"]
     assert closest_station(stations, 41.39, 2.17).code == "X1"
 
 

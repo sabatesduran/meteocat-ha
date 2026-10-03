@@ -202,7 +202,9 @@ def normalize_stations(payload: Any) -> list[Station]:
                 for state in states
                 if isinstance(state, dict)
             }
-            if state_codes and "ope" not in state_codes:
+            # The query parameter uses "ope", while Meteocat serializes that
+            # operational state as numeric code 2 in station metadata.
+            if state_codes and state_codes.isdisjoint({"ope", "2"}):
                 continue
         station = station_from_dict(item)
         if station and station.latitude is not None and station.longitude is not None:
