@@ -74,7 +74,8 @@ class MeteocatApiClient:
 
     async def async_get_stations(self) -> Any:
         """Return operational XEMA stations."""
-        return await self._request("/xema/v1/estacions/metadades?estat=ope")
+        today = datetime.now(ZoneInfo("Europe/Madrid")).strftime("%Y-%m-%dZ")
+        return await self._request(f"/xema/v1/estacions/metadades?estat=ope&data={today}")
 
     async def async_get_station_metadata(self, station_id: str) -> Any:
         """Return metadata for one XEMA station."""

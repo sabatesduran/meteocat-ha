@@ -28,6 +28,12 @@ DEFAULT_RADAR_FRAMES: Final = 11
 DEFAULT_RADAR_WIDTH: Final = 640
 DEFAULT_RADAR_HEIGHT: Final = 480
 
+# These intervals keep the common XEMA 750 and Prediction 100 monthly plans
+# below 80% usage, even in a 31-day month. The remaining quota covers setup,
+# retries, options changes, and Home Assistant restarts.
+ALLOWED_OBSERVATION_INTERVALS: Final = (90, 180)
+ALLOWED_FORECAST_INTERVALS: Final = (24,)
+
 MIN_LATITUDE: Final = 40.45
 MAX_LATITUDE: Final = 42.95
 MIN_LONGITUDE: Final = -0.2

@@ -9,6 +9,8 @@ from math import asin, cos, radians, sin, sqrt
 from typing import Any
 
 from .const import (
+    ALLOWED_FORECAST_INTERVALS,
+    ALLOWED_OBSERVATION_INTERVALS,
     CONDITION_CODES,
     DEFAULT_FORECAST_INTERVAL,
     DEFAULT_OBSERVATION_INTERVAL,
@@ -100,6 +102,8 @@ def quota_aware_intervals(payload: Any) -> tuple[int, int]:
     """Choose conservative polling intervals from the account's monthly quotas."""
     observation_interval = DEFAULT_OBSERVATION_INTERVAL
     forecast_interval = DEFAULT_FORECAST_INTERVAL
+    minutes_per_month = 31 * 24 * 60
+    hours_per_month = 31 * 24
     plans = payload.get("plans", []) if isinstance(payload, dict) else []
     for plan in plans:
         if not isinstance(plan, dict):
@@ -113,14 +117,22 @@ def quota_aware_intervals(payload: Any) -> tuple[int, int]:
         budget = maximum * 0.8
         if name.startswith("xema"):
             observation_interval = next(
-                (minutes for minutes in (30, 60, 90, 180) if 43_200 / minutes <= budget),
-                180,
+                (
+                    minutes
+                    for minutes in ALLOWED_OBSERVATION_INTERVALS
+                    if minutes_per_month / minutes <= budget
+                ),
+                ALLOWED_OBSERVATION_INTERVALS[-1],
             )
         elif name.startswith("prediccio"):
             # Each forecast refresh uses two calls: hourly and daily.
             forecast_interval = next(
-                (hours for hours in (6, 12, 24) if 1_440 / hours <= budget),
-                24,
+                (
+                    hours
+                    for hours in ALLOWED_FORECAST_INTERVALS
+                    if hours_per_month * 2 / hours <= budget
+                ),
+                ALLOWED_FORECAST_INTERVALS[-1],
             )
     return observation_interval, forecast_interval
 

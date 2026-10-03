@@ -18,6 +18,8 @@ from .api import (
     MeteocatRateLimitError,
 )
 from .const import (
+    ALLOWED_FORECAST_INTERVALS,
+    ALLOWED_OBSERVATION_INTERVALS,
     CONF_FORECAST_INTERVAL,
     CONF_OBSERVATION_INTERVAL,
     DEFAULT_FORECAST_INTERVAL,
@@ -44,6 +46,8 @@ class MeteocatObservationCoordinator(DataUpdateCoordinator[Observations]):
         self.station_id = station_id
         self.using_cached_data = False
         minutes = int(settings.get(CONF_OBSERVATION_INTERVAL, DEFAULT_OBSERVATION_INTERVAL))
+        if minutes not in ALLOWED_OBSERVATION_INTERVALS:
+            minutes = DEFAULT_OBSERVATION_INTERVAL
         super().__init__(
             hass,
             _LOGGER,
@@ -88,6 +92,8 @@ class MeteocatForecastCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.town_id = town_id
         self.using_cached_data = False
         hours = int(settings.get(CONF_FORECAST_INTERVAL, DEFAULT_FORECAST_INTERVAL))
+        if hours not in ALLOWED_FORECAST_INTERVALS:
+            hours = DEFAULT_FORECAST_INTERVAL
         super().__init__(
             hass,
             _LOGGER,

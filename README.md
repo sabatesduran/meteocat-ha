@@ -54,16 +54,19 @@ Des de **Configura** es poden modificar:
 
 | Opció | Valors | Predeterminat |
 | --- | --- | --- |
-| Actualització XEMA | 30, 60, 90 o 180 minuts | Segons quota (habitualment 90 min) |
-| Actualització de predicció | 6, 12 o 24 hores | Segons quota (habitualment 24 h) |
+| Actualització XEMA | 90 o 180 minuts | Segons quota (habitualment 90 min) |
+| Actualització de predicció | 24 hores | 24 hores |
 | Cobertura del radar | Catalunya o local | Local |
 | Historial del radar | 30 o 60 minuts | 60 minuts |
 
 La integració consulta `quotes/v1/consum-actual`, reserva un 20% de marge i tria
 automàticament els intervals inicials més ràpids que no haurien de superar la
-quota mensual. Si aquesta consulta no està disponible, utilitza 90 minuts per a
-XEMA i 24 hores per a les prediccions. Comprova la quota concreta del teu pla
-abans de reduir manualment els intervals.
+quota mensual. Amb els plans XEMA de 750 consultes i Predicció de 100 consultes,
+90 minuts representen 496 actualitzacions XEMA periòdiques en un mes de 31 dies;
+24 hores representen 62 consultes de predicció periòdiques perquè cada
+actualització obté la predicció horària i la diària. El marge restant cobreix la
+reintents i els reinicis de Home Assistant. Els intervals inferiors es descarten
+també en configuracions existents per evitar exhaurir la quota.
 
 ## Targetes del tauler
 

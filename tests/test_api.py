@@ -1,6 +1,7 @@
 """Tests for Meteocat API error handling."""
 
 import asyncio
+import re
 from typing import Any
 
 import pytest
@@ -42,6 +43,17 @@ class FakeSession:
     def get(self, url: str, **kwargs: Any) -> FakeResponse:
         self.urls.append(url)
         return self.responses.pop(0)
+
+
+def test_station_filter_includes_required_date() -> None:
+    session = FakeSession([FakeResponse(200, payload=[])])
+
+    asyncio.run(MeteocatApiClient(session, "secret").async_get_stations())
+
+    assert re.search(
+        r"/xema/v1/estacions/metadades\?estat=ope&data=\d{4}-\d{2}-\d{2}Z$",
+        session.urls[-1],
+    )
 
 
 def test_observations_retry_last_available_date() -> None:

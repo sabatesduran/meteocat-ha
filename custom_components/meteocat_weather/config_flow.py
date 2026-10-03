@@ -28,6 +28,8 @@ from .api import (
     MeteocatRateLimitError,
 )
 from .const import (
+    ALLOWED_FORECAST_INTERVALS,
+    ALLOWED_OBSERVATION_INTERVALS,
     CONF_API_KEY,
     CONF_FORECAST_INTERVAL,
     CONF_LATITUDE,
@@ -310,6 +312,14 @@ class MeteocatWeatherOptionsFlow(OptionsFlow):
 
         towns = {item.code: item.name for item in self._municipalities}
         stations = {item.code: item.name for item in self._stations}
+        observation_interval = int(
+            current.get(CONF_OBSERVATION_INTERVAL, DEFAULT_OBSERVATION_INTERVAL)
+        )
+        if observation_interval not in ALLOWED_OBSERVATION_INTERVALS:
+            observation_interval = DEFAULT_OBSERVATION_INTERVAL
+        forecast_interval = int(current.get(CONF_FORECAST_INTERVAL, DEFAULT_FORECAST_INTERVAL))
+        if forecast_interval not in ALLOWED_FORECAST_INTERVALS:
+            forecast_interval = DEFAULT_FORECAST_INTERVAL
         schema = vol.Schema(
             {
                 **_coordinates_schema(current[CONF_LATITUDE], current[CONF_LONGITUDE]),
@@ -317,12 +327,12 @@ class MeteocatWeatherOptionsFlow(OptionsFlow):
                 vol.Required(CONF_STATION_ID, default=current[CONF_STATION_ID]): vol.In(stations),
                 vol.Required(
                     CONF_OBSERVATION_INTERVAL,
-                    default=current.get(CONF_OBSERVATION_INTERVAL, DEFAULT_OBSERVATION_INTERVAL),
-                ): vol.In({30: "30 min", 60: "1 h", 90: "1 h 30 min", 180: "3 h"}),
+                    default=observation_interval,
+                ): vol.In({90: "1 h 30 min", 180: "3 h"}),
                 vol.Required(
                     CONF_FORECAST_INTERVAL,
-                    default=current.get(CONF_FORECAST_INTERVAL, DEFAULT_FORECAST_INTERVAL),
-                ): vol.In({6: "6 h", 12: "12 h", 24: "24 h"}),
+                    default=forecast_interval,
+                ): vol.In({24: "24 h"}),
                 vol.Required(
                     CONF_RADAR_ZOOM,
                     default=current.get(CONF_RADAR_ZOOM, DEFAULT_RADAR_ZOOM),

@@ -132,3 +132,11 @@ def test_chooses_quota_aware_intervals() -> None:
     }
     assert quota_aware_intervals(payload) == (90, 24)
     assert quota_aware_intervals({"plans": []}) == (90, 24)
+    assert quota_aware_intervals(
+        {
+            "plans": [
+                {"nom": "XEMA", "maxConsultes": 10_000},
+                {"nom": "Predicció", "maxConsultes": 10_000},
+            ]
+        }
+    ) == (90, 24)

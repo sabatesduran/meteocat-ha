@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.3
+
+- Corregida la consulta d'estacions operatives XEMA per incloure la data que ara exigeix l'API de Meteocat.
+- Intervals d'actualització limitats a valors segurs per als plans mensuals XEMA 750 i Predicció 100, amb marge per a configuracions, reintents i reinicis.
+
 ## 0.1.2
 
 - S'ha aclarit el flux de configuració en dos passos per indicar que el municipi i l'estació XEMA es poden seleccionar després de validar la clau API.

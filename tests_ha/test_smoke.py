@@ -13,8 +13,10 @@ from custom_components.meteocat_weather.config_flow import MeteocatWeatherConfig
 from custom_components.meteocat_weather.const import (
     CONF_API_KEY,
     CONF_ENTRY_ID,
+    CONF_FORECAST_INTERVAL,
     CONF_LATITUDE,
     CONF_LONGITUDE,
+    CONF_OBSERVATION_INTERVAL,
     CONF_STATION_ID,
     CONF_STATION_NAME,
     CONF_TOWN_ID,
@@ -71,8 +73,10 @@ async def test_entities_construct_against_home_assistant(hass) -> None:
     entry.add_to_hass(hass)
     settings = {
         CONF_ENTRY_ID: entry.entry_id,
+        CONF_FORECAST_INTERVAL: 6,
         CONF_LATITUDE: 41.39,
         CONF_LONGITUDE: 2.17,
+        CONF_OBSERVATION_INTERVAL: 30,
         CONF_TOWN_NAME: "Barcelona",
         CONF_STATION_ID: "X8",
         CONF_STATION_NAME: "Barcelona - Zona Universitària",
@@ -115,6 +119,8 @@ async def test_entities_construct_against_home_assistant(hass) -> None:
     camera = MeteocatRadarCamera(radar, settings)
 
     assert sensor.unique_id == f"{entry.entry_id}_temperature"
+    assert observations.update_interval == timedelta(minutes=90)
+    assert forecast.update_interval == timedelta(hours=24)
     assert sensor.native_value == 21.5
     assert weather.unique_id == f"{entry.entry_id}_weather"
     assert weather.condition == "sunny"
